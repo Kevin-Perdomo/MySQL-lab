@@ -93,6 +93,30 @@ docker-compose ps
 docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
 ```
 
+## 📦 Importar banco de dados de exemplo
+
+### Para criar o banco de dados `papelaria` a partir do arquivo SQL:
+
+```bash
+docker exec -i mysql-abd mysql -uroot -proot123 < db/papelaria.sql
+```
+
+### Ou conectar ao MySQL e executar:
+
+```bash
+docker exec -it mysql-abd mysql -uroot -proot123 -e "source /docker-entrypoint-initdb.d/papelaria.sql"
+```
+
+### Para verificar se o banco foi criado:
+
+```bash
+docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
+```
+
+```bash
+docker exec -it mysql-abd mysql -uroot -proot123 papelaria -e "SHOW TABLES;"
+```
+
 ## 🗄️ Persistência de dados
 
 Os dados do MySQL são persistidos em um volume Docker chamado `mysql_data`. Isso significa que:
