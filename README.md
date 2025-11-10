@@ -28,19 +28,19 @@ Este projeto contém um container Docker com MySQL 8.0 configurado e pronto para
 ### Iniciar o container
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### Parar o container
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ### Parar e remover os dados (reiniciar do zero)
 
 ```bash
-docker-compose down -v
+docker compose down -v
 ```
 
 ## 🔧 Configurações
@@ -78,13 +78,13 @@ docker exec -it mysql-abd mysql -uroot -proot123
 ### Ver logs do container
 
 ```bash
-docker-compose logs -f
+docker compose logs -f
 ```
 
 ### Verificar status do container
 
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 ### Executar comandos SQL diretamente
