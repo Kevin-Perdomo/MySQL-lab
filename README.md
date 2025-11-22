@@ -52,10 +52,50 @@ docker compose down -v
 
 ## 📊 Conectar ao MySQL
 
-### Via linha de comando (dentro do container)
+### Via linha de comando (fora do container)
 
 ```bash
+# Conectar ao MySQL
 docker exec -it mysql-abd mysql -uroot -proot123
+
+# Conectar diretamente a um banco específico
+docker exec -it mysql-abd mysql -uroot -proot123 aula_db
+docker exec -it mysql-abd mysql -uroot -proot123 gearhub
+docker exec -it mysql-abd mysql -uroot -proot123 papelaria
+
+# Conectar pedindo senha interativamente (mais seguro)
+docker exec -it mysql-abd mysql -uroot -p
+```
+
+### Comandos úteis dentro do MySQL
+
+```sql
+-- Ver todos os bancos de dados
+SHOW DATABASES;
+
+-- Usar/entrar em um banco específico
+USE aula_db;
+USE gearhub;
+USE papelaria;
+
+-- Ver qual banco está sendo usado
+SELECT DATABASE();
+
+-- Ver todas as tabelas do banco atual
+SHOW TABLES;
+
+-- Descrever estrutura de uma tabela
+DESCRIBE nome_da_tabela;
+
+-- Ver informações sobre colunas de uma tabela
+SHOW COLUMNS FROM nome_da_tabela;
+
+-- Ver comando CREATE de uma tabela
+SHOW CREATE TABLE nome_da_tabela;
+
+-- Sair do MySQL
+exit;
+-- ou pressione Ctrl+D
 ```
 
 ### Via cliente MySQL externo
@@ -95,16 +135,12 @@ docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
 
 ## 📦 Importar banco de dados de exemplo
 
-### Para criar o banco de dados `papelaria` a partir do arquivo SQL:
+### 🚗 GearHub - Sistema de Gestão de Veículos
+
+#### Criar o banco de dados GearHub:
 
 ```bash
-docker exec -i mysql-abd mysql -uroot -proot123 < db/papelaria.sql
-```
-
-### Ou conectar ao MySQL e executar:
-
-```bash
-docker exec -it mysql-abd mysql -uroot -proot123 -e "source /docker-entrypoint-initdb.d/papelaria.sql"
+docker exec -i mysql-abd mysql -uroot -proot123 < src/GearHub/db/ddl.sql
 ```
 
 ### Para verificar se o banco foi criado:
@@ -114,7 +150,7 @@ docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
 ```
 
 ```bash
-docker exec -it mysql-abd mysql -uroot -proot123 papelaria -e "SHOW TABLES;"
+docker exec -it mysql-abd mysql -uroot -proot123 gearhub -e "SHOW TABLES;"
 ```
 
 ## 🗄️ Persistência de dados
