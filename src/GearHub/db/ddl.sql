@@ -3,6 +3,8 @@
 -- ===========================
 -- CRIAÇÃO DO BANCO
 -- ===========================
+DROP DATABASE IF EXISTS gearhub;
+
 CREATE DATABASE gearhub
   DEFAULT CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
@@ -15,7 +17,7 @@ USE gearhub;
 CREATE TABLE gh_empresas (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     cnpj CHAR(14) NOT NULL UNIQUE,
-    data_criacao DATETIME(6) DEFAULT CURRENT_TIMESTAMP,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     logo LONGBLOB,
     nome VARCHAR(150) NOT NULL,
     nome_arquivo_logo VARCHAR(255)
@@ -115,7 +117,7 @@ CREATE TABLE gh_documentos (
     ano_referencia INT NOT NULL,
     arquivo_pdf LONGBLOB,
     data_pagamento DATE,
-    data_upload DATETIME(6) DEFAULT CURRENT_TIMESTAMP,
+    data_upload DATETIME DEFAULT CURRENT_TIMESTAMP,
     descricao TEXT,
     nome_arquivo VARCHAR(255),
     status VARCHAR(50),
