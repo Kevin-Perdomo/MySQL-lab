@@ -44,6 +44,9 @@ CREATE TABLE gh_sedes (
 CREATE TABLE gh_veiculos (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     ano_modelo SMALLINT NOT NULL,
+    capacidade_reserva_litros DOUBLE,
+    capacidade_tanque_litros DOUBLE,
+    combustivel_recomendado VARCHAR(50),
     descricao TEXT,
     foto LONGBLOB,
     marca VARCHAR(100) NOT NULL,
@@ -53,20 +56,6 @@ CREATE TABLE gh_veiculos (
     sede_id BIGINT NOT NULL,
 
     FOREIGN KEY (sede_id) REFERENCES gh_sedes(id)
-    ON DELETE CASCADE
-);
-
--- ===========================
--- AUTONOMIA DO VEÍCULO
--- ===========================
-CREATE TABLE gh_autonomia (
-    id BIGINT PRIMARY KEY AUTO_INCREMENT,
-    capacidade_reserva_litros DOUBLE,
-    capacidade_tanque_litros DOUBLE,
-    combustivel_recomendado VARCHAR(50),
-    veiculo_id BIGINT NOT NULL,
-
-    FOREIGN KEY (veiculo_id) REFERENCES gh_veiculos(id)
     ON DELETE CASCADE
 );
 

@@ -12,18 +12,11 @@ INSERT INTO gh_sedes (empresa_id, nome, endereco) VALUES
 (2, 'Base Vitória', 'Av. Dante Michelini, 100, Vitória - ES');
 
 -- Inserindo Veículos (Vinculados às sedes)
-INSERT INTO gh_veiculos (sede_id, placa, marca, modelo, ano_modelo, descricao) VALUES 
-(1, 'KRA1234', 'Toyota', 'Hilux', 2022, 'Caminhonete de apoio operacional'),
-(1, 'LMN5678', 'Fiat', 'Fiorino', 2020, 'Transporte de pequenas cargas'),
-(2, 'RIO2023', 'Volkswagen', 'Constellation', 2023, 'Caminhão toco'),
-(3, 'ESP9999', 'Ford', 'Ranger', 2021, 'Veículo da gerência');
-
--- Inserindo Autonomia
-INSERT INTO gh_autonomia (veiculo_id, capacidade_tanque_litros, capacidade_reserva_litros, combustivel_recomendado) VALUES 
-(1, 80.0, 10.0, 'Diesel S10'),
-(2, 55.0, 8.0, 'Gasolina'),
-(3, 275.0, 30.0, 'Diesel S10'),
-(4, 76.0, 9.0, 'Diesel S10');
+INSERT INTO gh_veiculos (sede_id, placa, marca, modelo, ano_modelo, descricao, capacidade_tanque_litros, capacidade_reserva_litros, combustivel_recomendado) VALUES 
+(1, 'KRA1234', 'Toyota', 'Hilux', 2022, 'Caminhonete de apoio operacional', 80.0, 10.0, 'Diesel S10'),
+(1, 'LMN5678', 'Fiat', 'Fiorino', 2020, 'Transporte de pequenas cargas', 55.0, 8.0, 'Gasolina'),
+(2, 'RIO2023', 'Volkswagen', 'Constellation', 2023, 'Caminhão toco', 275.0, 30.0, 'Diesel S10'),
+(3, 'ESP9999', 'Ford', 'Ranger', 2021, 'Veículo da gerência', 76.0, 9.0, 'Diesel S10');
 
 -- Inserindo Baterias
 INSERT INTO gh_baterias (veiculo_id, marca, modelo, capacidade_ah, voltagem, data_instalacao, km_instalacao, fim_garantia) VALUES 
