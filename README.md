@@ -148,16 +148,29 @@ docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/dml.sql
 
 # 3. Atualizar status (CASE WHEN)
 docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/update-case_when.sql
+
+# 4. Criar índices para otimizar buscas e joins
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/indices.sql
+
+# 5. Criar usuários e aplicar permissões (DCL)
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/dcl.sql
+
 ```
 
-### Para verificar se o banco foi criado:
+### Para verificar as permissões criadas:
 
 ```bash
-docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
-```
+# Ver permissões do Operador (deve mostrar acesso às 3 tabelas)
+SHOW GRANTS FOR 'operador_gh'@'localhost';
 
-```bash
-docker exec -it mysql-abd mysql -uroot -proot123 gearhub -e "SHOW TABLES;"
+# Ver permissões do Mecânico (deve mostrar acesso apenas a colunas específicas)
+SHOW GRANTS FOR 'mecanico_gh'@'localhost';
+
+# Ver permissões do Auditor (deve mostrar acesso de leitura a tudo)
+SHOW GRANTS FOR 'auditor_gh'@'localhost';
+
+# Ver permissões do Admin (deve mostrar ALL PRIVILEGES)
+SHOW GRANTS FOR 'admin_gh'@'localhost';
 ```
 
 ## 🗄️ Persistência de dados
