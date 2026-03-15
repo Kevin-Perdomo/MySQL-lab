@@ -141,13 +141,13 @@ docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
 
 ```bash
 # 1. Criar estrutura (DDL)
-docker exec -i mysql-abd mysql -uroot -proot123 < src/GearHub/db/ddl.sql
+docker exec -i mysql-abd mysql -uroot -proot123 < GearHub/db/ddl.sql
 
 # 2. Inserir dados (DML)
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < src/GearHub/db/dml.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/dml.sql
 
 # 3. Atualizar status (CASE WHEN)
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < src/GearHub/db/update-case_when.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/update-case_when.sql
 ```
 
 ### Para verificar se o banco foi criado:
