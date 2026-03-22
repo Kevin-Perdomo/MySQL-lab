@@ -202,6 +202,19 @@ SELECT id, tipo_documento, status, data_pagamento FROM gh_documentos WHERE id = 
 SELECT marca, fn_dias_garantia_bateria(fim_garantia) AS dias_para_vencer FROM gh_baterias;
 ```
 
+### Para verificar a procedure de registro de troca de oleo:
+
+```sql
+-- 1. Verifique o ultimo registro antes da chamada da procedure
+SELECT * FROM gh_oleos ORDER BY id DESC;
+
+-- 2. Chame a procedure para registrar uma nova troca de oleo
+CALL sp_registrar_troca_oleo('KRA1234', '15W40 Sintetico', 65000, 1);
+
+-- 3. Verifique novamente para confirmar o novo registro
+SELECT * FROM gh_oleos ORDER BY id DESC;
+```
+
 ## 🗄️ Persistência de dados
 
 Os dados do MySQL são persistidos em um volume Docker chamado `mysql_data`. Isso significa que:
