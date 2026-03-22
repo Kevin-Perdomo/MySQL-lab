@@ -1,6 +1,6 @@
 # File Tree: MySQL-lab
 
-**Generated:** 3/22/2026, 10:51:59 AM
+**Generated:** 3/22/2026, 11:51:59 AM
 **Root Path:** `/home/kevin/Documents/Projetos_IFF/MySQL-lab`
 
 ```
@@ -8,7 +8,7 @@
 │   ├── 📄 backup.sh
 │   └── 📝 planning.md
 ├── 📁 db
-│   ├── 📁 DCl
+│   ├── 📁 DCL
 │   │   └── 📄 permissions.sql
 │   ├── 📁 DDL
 │   │   ├── 📄 indices.sql
