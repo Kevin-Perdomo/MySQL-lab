@@ -153,7 +153,7 @@ docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DML/update-case_whe
 docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DDL/indices.sql
 
 # 5. Criar usuários e aplicar permissões (DCL)
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DCl/permissions.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DCL/permissions.sql
 
 # 6. Criar triggers (rotinas)
 docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/routines/triggers.sql
@@ -193,6 +193,13 @@ UPDATE gh_documentos SET data_pagamento = CURDATE() WHERE id = 1;
 
 -- 3. Veja a trigger em ação (status alterado automaticamente para 'Regularizado')
 SELECT id, tipo_documento, status, data_pagamento FROM gh_documentos WHERE id = 1;
+```
+
+### Para verificar a function de garantia da bateria:
+
+```sql
+-- Lista a marca e quantos dias faltam para vencer a garantia da bateria
+SELECT marca, fn_dias_garantia_bateria(fim_garantia) AS dias_para_vencer FROM gh_baterias;
 ```
 
 ## 🗄️ Persistência de dados
