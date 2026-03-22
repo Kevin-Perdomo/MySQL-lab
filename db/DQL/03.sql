@@ -1,3 +1,5 @@
+-- Data Query Language (DQL) for GearHub Database
+
 -- Relatório 3: Auditoria de Garantia de Baterias
 
 -- Descrição: Lista todas as baterias instaladas na frota, vinculando-as aos veículos. 

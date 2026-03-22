@@ -1,3 +1,5 @@
+-- Data Query Language (DQL) for GearHub Database
+
 -- Relatório 1: Visão Geral da Frota por Empresa e Sede
 
 -- Descrição: Este relatório mapeia a distribuição dos veículos do GearHub. 

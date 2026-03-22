@@ -1,3 +1,5 @@
+-- Data Query Language (DQL) for GearHub Database
+
 -- Relatório 2: Status Operacional de Documentação
 
 -- Descrição: Retorna a placa e o modelo dos veículos junto com os dados dos seus documentos. 

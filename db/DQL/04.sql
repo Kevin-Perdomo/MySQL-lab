@@ -1,3 +1,5 @@
+-- Data Query Language (DQL) for GearHub Database
+
 -- Relatório 4: Qualidade das Manutenções de Óleo
 
 -- Descrição: Traz o histórico de trocas de óleo. 

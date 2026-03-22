@@ -1,3 +1,5 @@
+-- Data Query Language (DQL) for GearHub Database
+
 -- Relatório 5: Rastreabilidade de Pneus com Subconsulta
 
 -- Descrição: Mostra quais veículos já tiveram pneus trocados e registrados no sistema, 
