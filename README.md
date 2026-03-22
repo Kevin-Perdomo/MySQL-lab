@@ -141,19 +141,28 @@ docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
 
 ```bash
 # 1. Criar estrutura (DDL)
-docker exec -i mysql-abd mysql -uroot -proot123 < GearHub/db/ddl.sql
+docker exec -i mysql-abd mysql -uroot -proot123 < db/DDL/schema.sql
 
 # 2. Inserir dados (DML)
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/dml.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DML/inserts.sql
 
 # 3. Atualizar status (CASE WHEN)
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/update-case_when.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DML/update-case_when.sql
 
 # 4. Criar índices para otimizar buscas e joins
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/indices.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DDL/indices.sql
 
 # 5. Criar usuários e aplicar permissões (DCL)
-docker exec -i mysql-abd mysql -uroot -proot123 gearhub < GearHub/db/dcl.sql
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/DCl/permissions.sql
+
+# 6. Criar triggers (rotinas)
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/routines/triggers.sql
+
+# 7. Criar procedures (rotinas)
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/routines/procedures.sql
+
+# 8. Criar functions (rotinas)
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/routines/functions.sql
 
 ```
 
@@ -171,6 +180,19 @@ SHOW GRANTS FOR 'auditor_gh'@'localhost';
 
 # Ver permissões do Admin (deve mostrar ALL PRIVILEGES)
 SHOW GRANTS FOR 'admin_gh'@'localhost';
+```
+
+### Para verificar a trigger de regularização automática:
+
+```sql
+-- 1. Veja como está o documento de ID 1 (status deve estar 'Pendente' e data_pagamento NULL)
+SELECT id, tipo_documento, status, data_pagamento FROM gh_documentos WHERE id = 1;
+
+-- 2. Faça o UPDATE apenas da data (simulando o pagamento hoje)
+UPDATE gh_documentos SET data_pagamento = CURDATE() WHERE id = 1;
+
+-- 3. Veja a trigger em ação (status alterado automaticamente para 'Regularizado')
+SELECT id, tipo_documento, status, data_pagamento FROM gh_documentos WHERE id = 1;
 ```
 
 ## 🗄️ Persistência de dados
