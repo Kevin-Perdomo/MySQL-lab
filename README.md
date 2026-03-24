@@ -38,6 +38,10 @@ docker compose down
 ```
 
 ### Parar e remover os dados (reiniciar do zero)
+Os dados do MySQL são persistidos em um volume Docker chamado `mysql_data`. Isso significa que:
+
+- Os dados permanecem mesmo se você parar o container
+- Para resetar completamente:
 
 ```bash
 docker compose down -v
@@ -214,10 +218,21 @@ CALL sp_registrar_troca_oleo('KRA1234', '15W40 Sintetico', 65000, 1);
 -- 3. Verifique novamente para confirmar o novo registro
 SELECT * FROM gh_oleos ORDER BY id DESC;
 ```
+### Inicializar o Banco de Dados do Zero (`init_db.sh`)
+Para rodar a configuração inicial com Docker, executando DDL, DML, DCL e rotinas:
 
-## 🗄️ Persistência de dados
+```bash
+chmod +x init_db.sh
+./init_db.sh
+```
 
-Os dados do MySQL são persistidos em um volume Docker chamado `mysql_data`. Isso significa que:
+### Criar um Backup (`backup.sh`)
+```bash
+chmod +x backup/backup.sh
+./backup/backup.sh
+```
 
-- Os dados permanecem mesmo se você parar o container
-- Para resetar completamente, use `docker-compose down -v`
+### Restaurar um Backup
+```bash
+docker exec -i mysql-abd mysql -uroot -proot123 gearhub < backup/dumps/NOME_DO_ARQUIVO.sql
+```
