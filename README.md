@@ -2,9 +2,22 @@
 
 ![Logo](images/logo.png)
 
-## 📚 Sobre o Repositório
+## 📑 Índice
 
-Este repositório foi criado para facilitar o aprendizado e a prática durante as aulas de **Administração de Banco de Dados**. Aqui você encontrará um ambiente MySQL completo configurado via Docker, pronto para ser usado como laboratório para:
+- [Sobre](#-sobre)
+- [Pré-requisitos](#-pré-requisitos)
+- [Container](#-container)
+- [Conectar ao MySQL](#-conectar-ao-mysql)
+- [Banco de Dados GearHub](#-banco-de-dados-gearhub)
+- [Permissões (DCL)](#-permissões-dcl)
+- [Rotinas](#️-rotinas)
+- [Backup](#-backup)
+
+---
+
+## 📚 Sobre
+
+Repositório criado para facilitar o aprendizado durante as aulas de **Administração de Banco de Dados**. Ambiente MySQL completo via Docker, pronto para:
 
 - 🎯 Aprender e praticar conceitos de SQL
 - 💡 Experimentar com consultas avançadas
@@ -14,49 +27,52 @@ Este repositório foi criado para facilitar o aprendizado e a prática durante a
 
 ---
 
-## 🐳 Sobre o Container
-
-Este projeto contém um container Docker com MySQL 8.0 configurado e pronto para uso em ambiente de desenvolvimento e aprendizado.
-
 ## 📋 Pré-requisitos
 
-- Docker instalado
-- Docker Compose instalado
+- Linux
+- Docker
+- Docker Compose
 
-## 🚀 Como usar
+---
 
-### Iniciar o container
+## 🐳 Container
+
+MySQL 8.0 configurado para desenvolvimento e aprendizado.
+
+| Configuração  | Valor   |
+|---------------|---------|
+| Porta         | 3306    |
+| Usuário       | root    |
+| Senha         | root123 |
+| Banco inicial | aula_db |
+
+### Gerenciar o container
 
 ```bash
+# Iniciar
 docker compose up -d
-```
 
-### Parar o container
-
-```bash
+# Parar
 docker compose down
-```
 
-### Parar e remover os dados (reiniciar do zero)
-Os dados do MySQL são persistidos em um volume Docker chamado `mysql_data`. Isso significa que:
-
-- Os dados permanecem mesmo se você parar o container
-- Para resetar completamente:
-
-```bash
+# Parar e remover dados (reiniciar do zero)
 docker compose down -v
 ```
 
-## 🔧 Configurações
+> Os dados são persistidos no volume `mysql_data` e sobrevivem a reinicializações normais.
 
-- **Porta:** 3306
-- **Usuário:** root
-- **Senha:** root123
-- **Banco de dados inicial:** aula_db
+### Logs e status
 
-## 📊 Conectar ao MySQL
+```bash
+docker compose logs -f
+docker compose ps
+```
 
-### Via linha de comando (fora do container)
+---
+
+## 🔌 Conectar ao MySQL
+
+### Via terminal
 
 ```bash
 # Conectar ao MySQL
@@ -69,7 +85,22 @@ docker exec -it mysql-abd mysql -uroot -proot123 papelaria
 
 # Conectar pedindo senha interativamente (mais seguro)
 docker exec -it mysql-abd mysql -uroot -p
+
+# Executar comando SQL direto
+docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
 ```
+
+### Via cliente externo
+
+| Campo    | Valor     |
+|----------|-----------|
+| Host     | localhost |
+| Porta    | 3306      |
+| Usuário  | root      |
+| Senha    | root123   |
+| Database | aula_db   |
+
+Ferramentas recomendadas: MySQL Workbench, DBeaver, phpMyAdmin, DataGrip
 
 ### Comandos úteis dentro do MySQL
 
@@ -102,46 +133,20 @@ exit;
 -- ou pressione Ctrl+D
 ```
 
-### Via cliente MySQL externo
+---
 
-- **Host:** localhost
-- **Porta:** 3306
-- **Usuário:** root
-- **Senha:** root123
-- **Database:** aula_db
+## 📦 Banco de Dados GearHub
 
-### Ferramentas recomendadas
+Sistema de Gestão de Veículos.
 
-- MySQL Workbench
-- DBeaver
-- phpMyAdmin
-- DataGrip
-
-## 💡 Comandos úteis
-
-### Ver logs do container
+### Inicialização rápida
 
 ```bash
-docker compose logs -f
+chmod +x init_db.sh
+./init_db.sh
 ```
 
-### Verificar status do container
-
-```bash
-docker compose ps
-```
-
-### Executar comandos SQL diretamente
-
-```bash
-docker exec -it mysql-abd mysql -uroot -proot123 -e "SHOW DATABASES;"
-```
-
-## 📦 Importar banco de dados de exemplo
-
-### 🚗 GearHub - Sistema de Gestão de Veículos
-
-#### Criar o banco de dados GearHub:
+### Inicialização manual (passo a passo)
 
 ```bash
 # 1. Criar estrutura (DDL)
@@ -167,29 +172,34 @@ docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/routines/procedures
 
 # 8. Criar functions (rotinas)
 docker exec -i mysql-abd mysql -uroot -proot123 gearhub < db/routines/functions.sql
-
 ```
 
-### Para verificar as permissões criadas:
+---
 
-```bash
-# Ver permissões do Operador (deve mostrar acesso às 3 tabelas)
+## 🔐 Permissões (DCL)
+
+```sql
+-- Ver permissões do Operador (deve mostrar acesso às 3 tabelas)
 SHOW GRANTS FOR 'operador_gh'@'localhost';
 
-# Ver permissões do Mecânico (deve mostrar acesso apenas a colunas específicas)
+-- Ver permissões do Mecânico (deve mostrar acesso apenas a colunas específicas)
 SHOW GRANTS FOR 'mecanico_gh'@'localhost';
 
-# Ver permissões do Auditor (deve mostrar acesso de leitura a tudo)
+-- Ver permissões do Auditor (deve mostrar acesso de leitura a tudo)
 SHOW GRANTS FOR 'auditor_gh'@'localhost';
 
-# Ver permissões do Admin (deve mostrar ALL PRIVILEGES)
+-- Ver permissões do Admin (deve mostrar ALL PRIVILEGES)
 SHOW GRANTS FOR 'admin_gh'@'localhost';
 ```
 
-### Para verificar a trigger de regularização automática:
+---
+
+## ⚙️ Rotinas
+
+### Trigger — Regularização automática de documentos
 
 ```sql
--- 1. Veja como está o documento de ID 1 (status deve estar 'Pendente' e data_pagamento NULL)
+-- 1. Veja como está o documento de ID 1 (status deve estar 'Atrasado' e data_pagamento NULL)
 SELECT id, tipo_documento, status, data_pagamento FROM gh_documentos WHERE id = 1;
 
 -- 2. Faça o UPDATE apenas da data (simulando o pagamento hoje)
@@ -199,14 +209,14 @@ UPDATE gh_documentos SET data_pagamento = CURDATE() WHERE id = 1;
 SELECT id, tipo_documento, status, data_pagamento FROM gh_documentos WHERE id = 1;
 ```
 
-### Para verificar a function de garantia da bateria:
+### Function — Garantia da bateria
 
 ```sql
 -- Lista a marca e quantos dias faltam para vencer a garantia da bateria
 SELECT marca, fn_dias_garantia_bateria(fim_garantia) AS dias_para_vencer FROM gh_baterias;
 ```
 
-### Para verificar a procedure de registro de troca de oleo:
+### Procedure — Troca de óleo
 
 ```sql
 -- 1. Verifique o ultimo registro antes da chamada da procedure
@@ -218,21 +228,16 @@ CALL sp_registrar_troca_oleo('KRA1234', '15W40 Sintetico', 65000, 1);
 -- 3. Verifique novamente para confirmar o novo registro
 SELECT * FROM gh_oleos ORDER BY id DESC;
 ```
-### Inicializar o Banco de Dados do Zero (`init_db.sh`)
-Para rodar a configuração inicial com Docker, executando DDL, DML, DCL e rotinas:
+
+---
+
+## 💾 Backup
 
 ```bash
-chmod +x init_db.sh
-./init_db.sh
-```
-
-### Criar um Backup (`backup.sh`)
-```bash
+# Criar backup
 chmod +x backup/backup.sh
 ./backup/backup.sh
-```
 
-### Restaurar um Backup
-```bash
+# Restaurar backup
 docker exec -i mysql-abd mysql -uroot -proot123 gearhub < backup/dumps/NOME_DO_ARQUIVO.sql
 ```
