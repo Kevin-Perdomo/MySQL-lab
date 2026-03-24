@@ -1,10 +1,12 @@
 # File Tree: MySQL-lab
 
-**Generated:** 3/22/2026, 11:51:59 AM
+**Generated:** 3/24/2026, 5:06:55 PM
 **Root Path:** `/home/kevin/Documents/Projetos_IFF/MySQL-lab`
 
 ```
 ├── 📁 backup
+│   ├── 📁 dumps
+│   │   └── 📄 gearhub-2026-03-24_16-23-03.sql
 │   ├── 📄 backup.sh
 │   └── 📝 planning.md
 ├── 📁 db
@@ -27,13 +29,13 @@
 │       ├── 📄 procedures.sql
 │       └── 📄 triggers.sql
 ├── 📁 docs
+│   ├── 📝 GearHub_File-Tree.md
 │   ├── 📝 minimundo.md
 │   └── 📕 modelo-logico.pdf
 ├── 📁 images
 │   ├── 🖼️ logo.png
 │   └── 🖼️ tipos-primitivos-MySQL.png
 ├── 📝 README.md
-└── ⚙️ docker-compose.yml
+├── ⚙️ docker-compose.yml
+└── 📄 init_db.sh
 ```
-
----
